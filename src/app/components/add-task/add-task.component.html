@@ -1,0 +1,18 @@
+<!-- (ngSumbit) submits form -->
+<form class="add-form" (ngSubmit)="handleSubmit()">
+  <div class="form-control">
+    <label for="text">Task</label>
+    <input type="text" name="text" [(ngModel)]="text" id="text" placeholder="Add Task"/>
+  </div>
+  <div class="form-control">
+    <label for="text">Day & Time</label>
+    <!-- [()]="" is a two way data binding method, essentially equal to useState in React, it sets the state
+      in the parent directory and also updates the state in the child directory -->
+    <input type="text" name="day" id="day" [(ngModel)]="day" placeholder="Add Day and Time"/>
+  </div>
+  <div class="form-control form-control-check">
+    <label for="text">Reminder</label>
+    <input type="checkbox" name="reminder" [(ngModel)]="reminder" id="reminder"/>
+  </div>
+  <input type="submit" value="Save Task" class="btn btn-block"/>
+</form>

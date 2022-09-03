@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { UiService } from '../../services/ui.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -8,7 +10,15 @@ import { Component, OnInit } from '@angular/core';
 export class HeaderComponent implements OnInit {
   // attributes
   title: string = 'Task tracker';
-  constructor() { }
+  showAddTask: boolean = false;
+  subscription: Subscription;
+
+  constructor(
+    private uiService: UiService
+  ) {
+    // subscribe to the observable
+    this.subscription = this.uiService.onToggle().subscribe((value) => (this.showAddTask = value));
+  }
 
   // lifecycle method
   // similar to useEffect in react
@@ -17,6 +27,6 @@ export class HeaderComponent implements OnInit {
 
   // methods
   toggleAddTask(){
-    console.log('toggle');
+    this.uiService.toggleAddTask();
   }
 }

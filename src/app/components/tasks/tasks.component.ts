@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Task } from '../../Task';
 // import the TaskService
 import { TaskService } from '../../services/task.service';
+import { UiService } from '../../services/ui.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-tasks',
@@ -11,11 +13,17 @@ import { TaskService } from '../../services/task.service';
 export class TasksComponent implements OnInit {
   // set the tasks to an array of type { Task }
   tasks: Task[] = [];
+  showAddTask: boolean = false;
+  subscription: Subscription;
 
   // inject the TaskService into the constructor
   constructor(
-    private taskService: TaskService
-  ) { }
+    private taskService: TaskService,
+    private uiService: UiService
+  ) {
+    // subscribe to the observable
+    this.subscription = this.uiService.onToggle().subscribe((value) => (this.showAddTask = value));
+  }
 
   ngOnInit(): void {
     // call the getTasks method from the TaskService
@@ -40,5 +48,12 @@ export class TasksComponent implements OnInit {
   toggleReminder(task: Task) {
     task.reminder = !task.reminder;
     this.taskService.updateTaskReminder(task).subscribe();
+  }
+  addTask(task: Task) {
+    this.taskService.addTask(task).subscribe((task) => this.tasks.unshift(task));
+    // toggle the add task form
+    this.showAddTask = !this.showAddTask;
+    // toggle the uiService onToggle method
+    this.uiService.toggleAddTask();
   }
 }

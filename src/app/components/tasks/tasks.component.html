@@ -1,12 +1,22 @@
-<!-- For Loop that generates a Task item for each data point
-    [task] is a property binding that passes the data point to the Task-Item component
-    (deleteTask) is an event binding that passes the data point to the deleteTask function in the Task-Item component
-    (updateTask) is an event binding that passes the data point to the updateTask function in the Task-Item component
-    (toggleReminder) is an event binding that passes the data point to the toggleReminder function in the Task-Item component
+<!-- 
+  For Loop that generates a Task item for each data point
+  [task] is a property binding that passes the data point to the Task-Item component
+  (deleteTask) is an event binding that passes the data point to the deleteTask function in the Task-Item component
+  (updateTask) is an event binding that passes the data point to the updateTask function in the Task-Item component
+  (toggleReminder) is an event binding that passes the data point to the toggleReminder function in the Task-Item component
 -->
-<app-task-item
-  *ngFor="let task of tasks"
-  [task]="task"
-  (onDeleteTask)="deleteTask(task)"
-  (onToggleReminder)="toggleReminder(task)"
-></app-task-item>
+<!-- Set the conditional to render the form -->
+<div *ngIf="showAddTask">
+  <app-add-task (onAddTask)="addTask($event)"></app-add-task>
+</div>
+<!-- Set the conditional to render the tasks -->
+<div *ngIf="!showAddTask">
+  <h3>Tasks</h3>
+  <div *ngFor="let task of tasks">
+    <app-task-item 
+    [task]="task"
+    (onDeleteTask)="deleteTask(task)"
+    (onToggleReminder)="toggleReminder(task)"
+    ></app-task-item>
+  </div>
+</div>
