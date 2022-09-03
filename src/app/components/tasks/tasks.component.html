@@ -1,0 +1,12 @@
+<!-- For Loop that generates a Task item for each data point
+    [task] is a property binding that passes the data point to the Task-Item component
+    (deleteTask) is an event binding that passes the data point to the deleteTask function in the Task-Item component
+    (updateTask) is an event binding that passes the data point to the updateTask function in the Task-Item component
+    (toggleReminder) is an event binding that passes the data point to the toggleReminder function in the Task-Item component
+-->
+<app-task-item
+  *ngFor="let task of tasks"
+  [task]="task"
+  (onDeleteTask)="deleteTask(task)"
+  (onToggleReminder)="toggleReminder(task)"
+></app-task-item>
